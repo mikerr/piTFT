@@ -1,22 +1,14 @@
 # Display the mjpeg stream of motion server on piTFT screen
 
-import atexit
-import errno
-import fnmatch
 import io
 import os
-import os.path
 import pygame
-import stat
-import threading
 import time
 from pygame.locals import *
 from subprocess import call  
 
-
 import socket
 import sys 
-
 
 # Initialization -----------------------------------------------------------
 
@@ -46,7 +38,11 @@ def getmjpeg():
  # from https://gist.github.com/russss/1143799
 
  s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
- s.connect((host, int(port)))
+ try:
+     s.connect((host, int(port)))
+ except socket.error, msg:
+            print "Couldnt connect with the server: %s\n " % msg
+            return
 
  fh = s.makefile()
 
