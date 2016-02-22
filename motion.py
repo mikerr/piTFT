@@ -14,7 +14,7 @@ import sys
 
 host = "cctv"
 port = 8081
-webcam = "/tmp/webcam.jpg"
+webcam = "/run/shm/webcam.jpg"
 
 # Init framebuffer/touchscreen environment variables
 os.putenv('SDL_VIDEODRIVER', 'fbcon')
@@ -74,8 +74,8 @@ def getmjpeg():
  image = fh.read(length)
 
  with open(webcam, 'w') as out_fh:
-    out_fh.write(image)
-
+     out_fh.write(image)
+ 
  s.close()
 
 # Main loop ----------------------------------------------------------------
