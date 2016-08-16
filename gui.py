@@ -1,6 +1,6 @@
 import pygame
 from pygame.locals import *
-import os
+import os,subprocess
 
 WHITE = (255,255,255)
 BLACK = (0,0,0)
@@ -27,24 +27,25 @@ class Button:
 	self.text = font.render(title, 0, WHITE)
 	self.bounds = self.text.get_rect()
 	self.pos=(0,0)
+
+   def draw(self,pos):
+	self.pos = pos
+	screen.blit(self.text,pos)
+
    def hit(self,pos):
 	butpos = self.bounds.move(self.pos)
 	return  butpos.collidepoint(pos)
 
 buttons = [
-	Button('NASA'),
-	Button('Astronomy'),
-	Button('Pictures'),
-	Button('Photos'),
-	Button('Webcam'),
-	Button('Camera')]
+	Button('National Geographic PotD'),
+	Button('Astronomy Pic of the day'),
+	Button('Webcam')]
 
 # show buttons on screen 
 x = 0 
 y = 0
 for button in buttons:
-	button.pos = (x,y)
-	screen.blit(button.text,(x,y))
+	button.draw((x,y))
 	x = x + button.bounds.width + 10
 	if (x > 220): 
 		x = 0
@@ -66,3 +67,4 @@ while(True):
 			pygame.draw.rect(screen,BLACK,(50,BOTTOM,200,50))
 			screen.blit(button.text,(50,BOTTOM))
 			pygame.display.update()
+			subprocess.call("./apod.sh",shell=True)
