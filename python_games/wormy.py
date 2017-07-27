@@ -35,7 +35,14 @@ HEAD = 0 # syntactic sugar: index of the worm's head
 
 def main():
     global FPSCLOCK, DISPLAYSURF, BASICFONT
+    
+    # Init framebuffer/touchscreen environment variables
+    os.putenv('SDL_VIDEODRIVER', 'fbcon')
+    os.putenv('SDL_FBDEV'      , '/dev/fb1')
+    os.putenv('SDL_MOUSEDRV'   , 'TSLIB')
+    os.putenv('SDL_MOUSEDEV'   , '/dev/input/touchscreen')
 
+    # Init pygame and screen
     pygame.init()
     FPSCLOCK = pygame.time.Clock()
     # DISPLAYSURF = pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT))
