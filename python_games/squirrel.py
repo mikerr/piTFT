@@ -3,7 +3,7 @@
 # http://inventwithpython.com/pygame
 # Released under a "Simplified BSD" license
 
-import random, sys, time, math, pygame
+import random, sys, time, math, pygame, os
 from pygame.locals import *
 
 FPS = 30 # frames per second to update the screen
@@ -62,11 +62,19 @@ Grass data structure keys:
 
 def main():
     global FPSCLOCK, DISPLAYSURF, BASICFONT, L_SQUIR_IMG, R_SQUIR_IMG, GRASSIMAGES
+    # Init framebuffer/touchscreen environment variables
+    os.putenv('SDL_VIDEODRIVER', 'fbcon')
+    os.putenv('SDL_FBDEV'      , '/dev/fb1')
+    os.putenv('SDL_MOUSEDRV'   , 'TSLIB')
+    os.putenv('SDL_MOUSEDEV'   , '/dev/input/touchscreen')
 
+    # Init pygame and screen
     pygame.init()
+    pygame.mouse.set_visible(False)
     FPSCLOCK = pygame.time.Clock()
     pygame.display.set_icon(pygame.image.load('gameicon.png'))
-    DISPLAYSURF = pygame.display.set_mode((WINWIDTH, WINHEIGHT))
+    #DISPLAYSURF = pygame.display.set_mode((WINWIDTH, WINHEIGHT))
+    DISPLAYSURF = pygame.display.set_mode((0,0), pygame.FULLSCREEN)
     pygame.display.set_caption('Squirrel Eat Squirrel')
     BASICFONT = pygame.font.Font('freesansbold.ttf', 32)
 

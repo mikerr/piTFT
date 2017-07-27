@@ -3,7 +3,7 @@
 # By Al Sweigart al@inventwithpython.com
 # Released under a "Simplified BSD" license
 
-import random, sys, webbrowser, copy, pygame
+import random, sys, webbrowser, copy, pygame, os
 from pygame.locals import *
 
 # There are different box sizes, number of boxes, and
@@ -62,9 +62,17 @@ paletteColors =  COLORSCHEMES[0][1:]
 def main():
     global FPSCLOCK, DISPLAYSURF, LOGOIMAGE, SPOTIMAGE, SETTINGSIMAGE, SETTINGSBUTTONIMAGE, RESETBUTTONIMAGE
 
+    # Init framebuffer/touchscreen environment variables
+    os.putenv('SDL_VIDEODRIVER', 'fbcon')
+    os.putenv('SDL_FBDEV'      , '/dev/fb1')
+    os.putenv('SDL_MOUSEDRV'   , 'TSLIB')
+    os.putenv('SDL_MOUSEDEV'   , '/dev/input/touchscreen')
+
+    # Init pygame and screen
     pygame.init()
+    pygame.mouse.set_visible(False)
+    DISPLAYSURF = pygame.display.set_mode((0,0), pygame.FULLSCREEN)
     FPSCLOCK = pygame.time.Clock()
-    DISPLAYSURF = pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT))
 
     # Load images
     LOGOIMAGE = pygame.image.load('inkspilllogo.png')
