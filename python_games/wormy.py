@@ -5,7 +5,7 @@
 
 #KRT 14/06/2012 modified Start Screen and Game Over screen to cope with mouse events
 #KRT 14/06/2012 Added a non-busy wait to Game Over screen to reduce processor loading from near 100%
-import random, pygame, sys
+import random, pygame, sys, os
 from pygame.locals import *
 
 FPS = 15
