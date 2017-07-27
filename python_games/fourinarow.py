@@ -3,7 +3,7 @@
 # http://inventwithpython.com/pygame
 # Released under a "Simplified BSD" license
 
-import random, copy, sys, pygame
+import random, copy, sys, pygame, os
 from pygame.locals import *
 
 BOARDWIDTH = 7  # how many spaces wide the board is
@@ -39,9 +39,18 @@ def main():
     global BLACKTOKENIMG, BOARDIMG, ARROWIMG, ARROWRECT, HUMANWINNERIMG
     global COMPUTERWINNERIMG, WINNERRECT, TIEWINNERIMG
 
+    # Init framebuffer/touchscreen environment variables
+    os.putenv('SDL_VIDEODRIVER', 'fbcon')
+    os.putenv('SDL_FBDEV'      , '/dev/fb1')
+    os.putenv('SDL_MOUSEDRV'   , 'TSLIB')
+    os.putenv('SDL_MOUSEDEV'   , '/dev/input/touchscreen')
+
+    # Init pygame and screen
     pygame.init()
+    pygame.mouse.set_visible(False)
     FPSCLOCK = pygame.time.Clock()
-    DISPLAYSURF = pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT))
+    # DISPLAYSURF = pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT))
+    DISPLAYSURF = pygame.display.set_mode((0,0), pygame.FULLSCREEN)
     pygame.display.set_caption('Four in a Row')
 
     REDPILERECT = pygame.Rect(int(SPACESIZE / 2), WINDOWHEIGHT - int(3 * SPACESIZE / 2), SPACESIZE, SPACESIZE)
