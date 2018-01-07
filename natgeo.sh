@@ -1,5 +1,5 @@
 # display National Gegraphic pic of the day
-wget http://photography.nationalgeographic.com/photography/photo-of-the-day/ --quiet -O- 2> /dev/null | grep -m 1 //images.nationalgeographic.com/.*.jpg -o > /tmp/pic_url
+wget http://photography.nationalgeographic.com/photography/photo-of-the-day/ --quiet -O- 2> /dev/null | grep -m 1 //yourshot.nationalgeographic.com/u/[^/]* -o > /tmp/pic_url
 URL=`/bin/cat /tmp/pic_url`
 echo $URL
 wget --quiet http:$URL -O /tmp/natgeo.jpg
